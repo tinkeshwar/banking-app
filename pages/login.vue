@@ -1,21 +1,24 @@
 <script setup lang="ts">
-  import Joi from 'joi';
+import { schema } from '~/utils/schemas/login.schema'
+
+  definePageMeta({
+    layout: false
+  });
+
+  useSeoMeta({
+    title: 'Banking App Login'
+  })
 
   const authStore = useAuthStore();
   const loading = computed(() => authStore.loading);
   const router = useRouter();
-
-  const schema = Joi.object({
-    username: Joi.string().required().messages({ 'any.required': 'Username is required' }),
-    password: Joi.string().required().messages({ 'any.required': 'Password is required' })
-  });
 
   const state = reactive({
     username: undefined,
     password: undefined
   });
 
-  const onSubmit = async (event) => {
+  const onSubmit = async (event: any) => {
     const { username, password } = event.data;
     await authStore.login(username, password, 'admin');
     router.push('/');
@@ -26,14 +29,6 @@
       router.push('/');
     }
   });
-
-  definePageMeta({
-    layout: false
-  });
-
-  useSeoMeta({
-    title: 'Banking App Login'
-  })
 </script>
 
 <template>
