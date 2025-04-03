@@ -33,8 +33,8 @@ export const useAuthStore = defineStore("auth-store", {
       if(response && response.error){
         this.error = response.error;
       } else {
-        this.accessToken = response.data?.accessToken as string;
-        this.refreshToken = response.data?.refreshToken as string;
+        this.accessToken = response.data?.access_token as string;
+        this.refreshToken = response.data?.refresh_token as string;
       }
       this.loading = false;
     },
