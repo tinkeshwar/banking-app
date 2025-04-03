@@ -3,6 +3,7 @@ import Joi from "joi";
 export const schema = Joi.object({
   first_name: Joi.string().trim().min(2).max(50).required().messages({
     'any.required': 'First name is required',
+    'string.empty': 'First name cannot be empty',
     'string.min': 'First name must be at least 2 characters',
     'string.max': 'First name cannot exceed 50 characters'
   }),
@@ -49,7 +50,7 @@ export const schema = Joi.object({
     'string.min': 'Department must be at least 2 characters',
     'string.max': 'Department cannot exceed 50 characters'
   }),
-  staff_type: Joi.string().valid('Full-time', 'Part-time', 'Contract', 'Temporary').required().messages({
+  staff_type: Joi.string().valid('Superior', 'Clerk', 'Contract').required().messages({
     'any.required': 'Staff type is required',
     'any.only': 'Invalid staff type selected'
   }),
@@ -58,7 +59,7 @@ export const schema = Joi.object({
     'number.min': 'Income cannot be negative',
     'number.max': 'Income value is too large'
   }),
-  employment_status: Joi.string().valid('active', 'retired', 'resigned', 'terminated').required().messages({
+  employment_status: Joi.string().valid('Active', 'Retired', 'Resigned', 'Terminated').required().messages({
     'any.required': 'Employment status is required',
     'any.only': 'Invalid employment status selected'
   })
