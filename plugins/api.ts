@@ -2,6 +2,7 @@ import axios, { type InternalAxiosRequestConfig } from "axios";
 interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
   _retry?: boolean;
   skipAuthRefresh?: boolean;
+  cancelToken?: any;
 }
 
 export default defineNuxtPlugin(() => {
@@ -14,9 +15,16 @@ export default defineNuxtPlugin(() => {
 
   let isRefreshing = false;
   let refreshSubscribers: ((token: string) => void)[] = [];
+  let cancelTokenSource = axios.CancelToken.source();
 
   api.interceptors.request.use(
     async (config: CustomAxiosRequestConfig) => {
+      if (cancelTokenSource) {
+        cancelTokenSource.cancel('New request made');
+      }
+      cancelTokenSource = axios.CancelToken.source();
+      config.cancelToken = cancelTokenSource.token;
+
       if (authStore.accessToken && !config.skipAuthRefresh && config.headers) {
         config.headers.Authorization =  `Bearer ${authStore.accessToken}`;
       }
@@ -27,6 +35,10 @@ export default defineNuxtPlugin(() => {
 
   api.interceptors.response.use((response) => response,
     async (error) => {
+      if (axios.isCancel(error)) {
+        return Promise.reject(error);
+      }
+
       const originalRequest = error.config;
       if (error.response?.status === 401 && !originalRequest._retry && !originalRequest.skipAuthRefresh) {
         if (isRefreshing) {
