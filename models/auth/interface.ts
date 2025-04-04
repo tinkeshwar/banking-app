@@ -13,8 +13,8 @@ export interface LoginRequestInterface {
 
 export interface LoginResponseInterface {
   data: {
-    accessToken: string,
-    refreshToken: string
+    access_token: string,
+    refresh_token: string
   } | null,
   error: string | null
 }

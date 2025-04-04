@@ -13,7 +13,8 @@ export default defineNuxtConfig({
     '@nuxt/scripts',
     '@nuxt/test-utils',
     '@nuxt/ui',
-    '@pinia/nuxt'
+    '@pinia/nuxt',
+    'pinia-plugin-persistedstate/nuxt',
   ],
   css: ['~/assets/css/main.css'],
   appConfig: {

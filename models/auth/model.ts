@@ -31,7 +31,7 @@ const refresh = async (
 ): Promise<LoginResponseInterface> => {
   try {
     const { $api } = useNuxtApp() as any;
-    const response = await $api.post('/api/auth/refresh', data, { signal });
+    const response = await $api.post('/api/auth/refresh-token', data, { signal, skipAuthRefresh: true });
 
     return {
       data: response.data,

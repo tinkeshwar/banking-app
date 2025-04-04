@@ -4,7 +4,7 @@ import type { NavigationMenuItem } from '@nuxt/ui'
 const authStore = useAuthStore() 
 
 const logOut = () => {
-  authStore.reset()
+  authStore.resetStore()
   navigateTo('/login')
 }
 

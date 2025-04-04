@@ -7,6 +7,8 @@ import type { Form, FormSubmitEvent } from '@nuxt/ui';
   const submitForm = () => formReference.value?.submit();
   const clearForm = () => formReference.value?.clear();
 
+  const memberStore = useMemberStore();
+
   const state = reactive({
     first_name: undefined,
     middle_name: undefined,
@@ -50,7 +52,8 @@ import type { Form, FormSubmitEvent } from '@nuxt/ui';
   })
 
   const onSubmit = async (event: FormSubmitEvent<typeof state>) => {
-    console.log(event.data);
+    const member = event.data as any;
+    memberStore.create(member);
   };
 
   defineExpose({ submitForm, clearForm });
@@ -106,44 +109,44 @@ import type { Form, FormSubmitEvent } from '@nuxt/ui';
     <USeparator/>
     <h3 class="text-lg font-semibold">Current Address</h3>
     <div class="grid grid-cols-3 gap-4">
-      <UFormField name="address_line_1">
+      <UFormField name="current.line1">
         <UInput v-model="state.current.line1" placeholder="Address Line 1" class="w-full" />
       </UFormField>
-      <UFormField name="address_line_2">
+      <UFormField name="current.line2">
         <UInput v-model="state.current.line2" placeholder="Address Line 2" class="w-full" />
       </UFormField>
-      <UFormField name="city">
+      <UFormField name="current.city">
         <UInput v-model="state.current.city" placeholder="City" class="w-full" />
       </UFormField>
-      <UFormField name="state">
+      <UFormField name="current.state">
         <UInput v-model="state.current.state" placeholder="State" class="w-full" />
       </UFormField>
-      <UFormField name="country">
+      <UFormField name="current.country">
         <UInput v-model="state.current.country" placeholder="Country" class="w-full" />
       </UFormField>
-      <UFormField name="postal_code">
+      <UFormField name="current.postal_code">
         <UInput v-model="state.current.postal_code" placeholder="Postal Code" class="w-full" />
       </UFormField>
     </div>
     <USeparator/>
     <h3 class="text-lg font-semibold">Permanent Address</h3>
     <div class="grid grid-cols-3 gap-4">
-      <UFormField name="address_line_1">
+      <UFormField name="permanent.line1">
         <UInput v-model="state.permanent.line1" placeholder="Address Line 1" class="w-full" />
       </UFormField>
-      <UFormField name="address_line_2">
+      <UFormField name="permanent.line2">
         <UInput v-model="state.permanent.line2" placeholder="Address Line 2" class="w-full" />
       </UFormField>
-      <UFormField name="city">
+      <UFormField name="permanent.city">
         <UInput v-model="state.permanent.city" placeholder="City" class="w-full" />
       </UFormField>
-      <UFormField name="state">
+      <UFormField name="permanent.state">
         <UInput v-model="state.permanent.state" placeholder="State" class="w-full" />
       </UFormField>
-      <UFormField name="country">
+      <UFormField name="permanent.country">
         <UInput v-model="state.permanent.country" placeholder="Country" class="w-full" />
       </UFormField>
-      <UFormField name="postal_code">
+      <UFormField name="permanent.postal_code">
         <UInput v-model="state.permanent.postal_code" placeholder="Postal Code" class="w-full" />
       </UFormField>
     </div>

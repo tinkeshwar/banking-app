@@ -1,14 +1,23 @@
 <script setup lang="ts">
 
-  const formReference = ref<any>(null)
-
   useSeoMeta({
     title: 'Add Member Page'
   });
 
+  const formReference = ref<any>(null)
   const submitForm = () => formReference?.value?.submitForm();
   const clearForm = () => formReference?.value?.clearForm();
-  
+  const toast = useToast();
+
+  const memberStore = useMemberStore();
+  const alert = computed(() => memberStore.alert)
+  const loading = computed(() => memberStore.loading);
+
+  watch(alert, (newAlert) => {
+    if (newAlert) {
+      toast.add(newAlert as any)
+    }
+  })
 </script>
 
 <template>
@@ -19,8 +28,8 @@
     <MemberForm ref="formReference"/>
     <template #footer>
       <div class="flex justify-end gap-2">
-        <UButton label="Add Member" color="primary" icon="i-heroicons-plus" @click="submitForm" />
-        <UButton label="Clear" color="secondary" icon="i-heroicons-x-mark" @click="clearForm" />
+        <UButton :loading="loading" label="Add Member" color="primary" icon="i-heroicons-plus" @click="submitForm" />
+        <UButton :loading="loading" label="Clear" color="secondary" icon="i-heroicons-x-mark" @click="clearForm" />
       </div>
     </template> 
   </UCard>

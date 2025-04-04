@@ -1,5 +1,3 @@
-import { defineStore } from "pinia";
-
 interface AuthStateInterface {
   user: null;
   accessToken: string | null;
@@ -25,7 +23,7 @@ export const useAuthStore = defineStore("auth-store", {
     pick: ['accessToken', 'refreshToken'],
   },
   actions: {
-    async login (username: string, password: string, type: string) {
+    async login (username: string, password: string, type: string): Promise<void> {
       this.loading = true;
       this.abort = new AbortController();
       const { $auth } = useNuxtApp() as any;
@@ -38,7 +36,22 @@ export const useAuthStore = defineStore("auth-store", {
       }
       this.loading = false;
     },
-    reset () {
+
+    async refresh (): Promise<string> {
+      this.loading = true;
+      this.abort = new AbortController();
+      const { $auth } = useNuxtApp() as any;
+      const response = await $auth.refresh({token: this.refreshToken}, this.abort.signal);
+      if(response && response.error){
+        this.error = response.error;
+      } else {
+        this.accessToken = response.data?.access_token as string;
+        this.refreshToken = response.data?.refresh_token as string;
+      }
+      this.loading = false;
+      return this.accessToken as string;
+    },
+    resetStore () {
       this.accessToken = null;
       this.refreshToken = null;
       this.loading = false;

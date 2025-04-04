@@ -23,6 +23,7 @@ export const schema = Joi.object({
     'any.only': 'Relation must be Father, Mother or Spouse'
   }),
   date_of_birth: Joi.date().max('now').required().messages({
+    'any.required': 'Date of birth is required',
     'date.base': 'Please enter a valid date',
     'date.max': 'Date of birth cannot be in the future'
   }),
@@ -55,6 +56,7 @@ export const schema = Joi.object({
     'any.only': 'Invalid staff type selected'
   }),
   income: Joi.number().min(0).max(999999999).required().messages({
+    'any.required': 'Income is required',
     'number.base': 'Income must be a number',
     'number.min': 'Income cannot be negative',
     'number.max': 'Income value is too large'
@@ -62,5 +64,59 @@ export const schema = Joi.object({
   employment_status: Joi.string().valid('Active', 'Retired', 'Resigned', 'Terminated').required().messages({
     'any.required': 'Employment status is required',
     'any.only': 'Invalid employment status selected'
+  }),
+  current: Joi.object({
+    line1: Joi.string().trim().min(2).max(100).required().messages({
+      'any.required': 'Address line 1 is required',
+      'string.min': 'Address line 1 must be at least 2 characters',
+      'string.max': 'Address line 1 cannot exceed 100 characters'
+    }),
+    line2: Joi.string().trim().max(100).allow(''),
+    city: Joi.string().trim().min(2).max(50).required().messages({
+      'any.required': 'City is required',
+      'string.min': 'City must be at least 2 characters',
+      'string.max': 'City cannot exceed 50 characters'
+    }),
+    state: Joi.string().trim().min(2).max(50).required().messages({
+      'any.required': 'State is required',
+      'string.min': 'State must be at least 2 characters',
+      'string.max': 'State cannot exceed 50 characters'
+    }),
+    country: Joi.string().trim().min(2).max(50).required().messages({
+      'any.required': 'Country is required',
+      'string.min': 'Country must be at least 2 characters',
+      'string.max': 'Country cannot exceed 50 characters'
+    }),
+    postal_code: Joi.string().pattern(/^\d{6}$/).required().messages({
+      'any.required': 'Pincode is required',
+      'string.pattern.base': 'Pincode must be exactly 6 digits'
+    })
+  }),
+  permanent: Joi.object({
+    line1: Joi.string().trim().min(2).max(100).required().messages({
+      'any.required': 'Address line 1 is required',
+      'string.min': 'Address line 1 must be at least 2 characters',
+      'string.max': 'Address line 1 cannot exceed 100 characters'
+    }),
+    line2: Joi.string().trim().max(100).allow(''),
+    city: Joi.string().trim().min(2).max(50).required().messages({
+      'any.required': 'City is required',
+      'string.min': 'City must be at least 2 characters',
+      'string.max': 'City cannot exceed 50 characters'
+    }),
+    state: Joi.string().trim().min(2).max(50).required().messages({
+      'any.required': 'State is required',
+      'string.min': 'State must be at least 2 characters',
+      'string.max': 'State cannot exceed 50 characters'
+    }),
+    country: Joi.string().trim().min(2).max(50).required().messages({
+      'any.required': 'Country is required',
+      'string.min': 'Country must be at least 2 characters',
+      'string.max': 'Country cannot exceed 50 characters'
+    }),
+    postal_code: Joi.string().pattern(/^\d{6}$/).required().messages({
+      'any.required': 'Pincode is required',
+      'string.pattern.base': 'Pincode must be exactly 6 digits'
+    })
   })
 });
