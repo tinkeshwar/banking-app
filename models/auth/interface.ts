@@ -14,7 +14,8 @@ export interface LoginRequestInterface {
 export interface LoginResponseInterface {
   data: {
     access_token: string,
-    refresh_token: string
+    refresh_token: string,
+    user: Record<string, string>
   } | null,
   error: string | null
 }

@@ -20,7 +20,7 @@ export const useAuthStore = defineStore("auth-store", {
   persist: {
     key: 'banking-app',
     storage: sessionStorage,
-    pick: ['accessToken', 'refreshToken'],
+    pick: ['accessToken', 'refreshToken', 'user'],
   },
   actions: {
     async login (username: string, password: string, type: string): Promise<void> {
@@ -31,8 +31,10 @@ export const useAuthStore = defineStore("auth-store", {
       if(response && response.error){
         this.error = response.error;
       } else {
+        console.log(response.data);
         this.accessToken = response.data?.access_token as string;
         this.refreshToken = response.data?.refresh_token as string;
+        this.user = response.data?.user as any;
       }
       this.loading = false;
     },

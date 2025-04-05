@@ -3,6 +3,8 @@ import type { NavigationMenuItem } from '@nuxt/ui'
 
 const authStore = useAuthStore() 
 
+const username = computed(() => authStore.user?.profiles[0]?.first_name);
+
 const logOut = () => {
   authStore.resetStore()
   navigateTo('/login')
@@ -82,7 +84,7 @@ const top = ref<NavigationMenuItem[][]>([
       active: true,
       children: [
         {
-          label: 'Tinkeshwar Singh',
+          label: `${username.value}`,
           icon: 'mdi:account-box',
         },
         {

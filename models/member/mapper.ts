@@ -1,4 +1,4 @@
-import type { CreateMemberRequestPayloadInterface, ListMemberInterface, ListMemberResponseInterface, MemberFormInterface } from "~/models/member/interface";
+import { AddressType, type CreateMemberRequestPayloadInterface, type ListMemberInterface, type ListMemberResponseInterface, type MemberFormInterface } from "~/models/member/interface";
 
 export const memberPostPayloadMapper = (data: MemberFormInterface): CreateMemberRequestPayloadInterface => {
   const { current, permanent, ...rest } = data;
@@ -7,11 +7,11 @@ export const memberPostPayloadMapper = (data: MemberFormInterface): CreateMember
     addresses: [
       {
         ...current,
-        address_type: 'Local'
+        address_type: AddressType.LOCAL
       },
       {
         ...permanent,
-        address_type: 'Permanent'
+        address_type: AddressType.PERMANENT
       }
     ]
   }

@@ -1,5 +1,11 @@
-import type { PaginationMetaInterface } from "../interface";
+import type { PaginationMetaInterface } from "~/models/interface";
 
+export enum RelationType { FATHER = 'Father', MOTHER = 'Mother', SPOUSE = 'Spouse' }
+export enum EmploymentStatus { ACTIVE = 'Active', RETIRED = 'Retired', RESIGNED = 'Resigned', TERMINATED = 'Terminated' }
+export enum AddressType { LOCAL = 'Local', CURRENT = 'Current', PERMANENT = 'Permanent' }
+export enum Gender { MALE = 'Male', FEMALE = 'Female', OTHER = 'Other' }
+export enum MaritalStatus { SINGLE = 'Single', MARRIED = 'Married', DIVORCED = 'Divorced', WIDOWED = 'Widowed' }
+export enum StaffType { SUPERIOR = 'Superior', CLERK = 'Clerk', CONTRACT = 'Contract' }
 export interface BaseAddressInterface {
   line1: string;
   line2?: string;
@@ -10,7 +16,7 @@ export interface BaseAddressInterface {
 }
 
 export interface MemberAddressInterface extends BaseAddressInterface {
-  address_type: 'Local' | 'Permanent';
+  address_type: AddressType;
 }
 
 export interface BaseMemberInterface {
@@ -18,17 +24,17 @@ export interface BaseMemberInterface {
   middle_name?: string;
   last_name: string;
   guardian: string;
-  relation_with_guardian: 'Father' | 'Mother' | 'Spouse';
+  relation_with_guardian: RelationType;
   date_of_birth: Date;
-  gender: 'Male' | 'Female' | 'Other';
-  marital_status: 'Single' | 'Married' | 'Divorced' | 'Widowed';
+  gender: Gender;
+  marital_status: MaritalStatus;
   email: string;
   mobile: string;
   alternate_number?: string;
   department: string;
-  staff_type: 'Superior' | 'Clerk' | 'Contract';
+  staff_type: StaffType;
   income: number;
-  employment_status: 'Active' | 'Retired' | 'Resigned' | 'Terminated';
+  employment_status: EmploymentStatus;
 }
 
 export interface MemberInterface extends BaseMemberInterface {
